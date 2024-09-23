@@ -1,15 +1,15 @@
+CFLAGS+= -g -Wall
 
-ifdef CROSS_COMPILE
-COMPILER=aarch64-none-linux-gnu-gcc
-else
-COMPILER=gcc
-endif
+CC = $(CROSS_COMPILE)gcc $(CFLAGS)
 
-CFLAGS+=-Wall
+all: writer.o writer
 
-default : 
-		 $(COMPILER) $(CFLAGS) writer.c -o writer
+writer.o : writer.c
+	    $(CC) -c -o writer.o writer.c
+
+writer : 
+		 $(CC) writer.o -o writer
 
 .PHONY : clean        
 clean :
-		-rm writer
+		rm -rf writer.o writer
